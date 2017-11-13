@@ -1,0 +1,672 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>python: grammer</title>
+<!-- 2017-11-13 Mon 19:28 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<meta  name="author" content="杜猛" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<link href="https://cdn.bootcss.com/normalize/5.0.0/normalize.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="https://bootswatch.com/4/flatly/bootstrap.min.css" />
+<script src="https://cdn.rawgit.com/Matt-Esch/virtual-dom/master/dist/virtual-dom.js"></script>
+<link rel="stylesheet" type="text/css" href="../../static/mystyle.css" />
+<script src='../../static/myscript.js' ></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">python: grammer</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. data, type, program structure</a>
+<ul>
+<li><a href="#sec-1-1">1.1. type check</a></li>
+<li><a href="#sec-1-2">1.2. types</a></li>
+<li><a href="#sec-1-3">1.3. string format</a></li>
+</ul>
+</li>
+<li><a href="#sec-2">2. oop</a>
+<ul>
+<li><a href="#sec-2-1">2.1. class variable</a></li>
+<li><a href="#sec-2-2">2.2. instance variable</a></li>
+<li><a href="#sec-2-3">2.3. public and private</a></li>
+</ul>
+</li>
+<li><a href="#sec-3">3. special variables</a>
+<ul>
+<li><a href="#sec-3-1">3.1. <span class="underline"><span class="underline">name</span></span></a></li>
+</ul>
+</li>
+<li><a href="#sec-4">4. import module</a>
+<ul>
+<li><a href="#sec-4-1">4.1. import from same directory</a>
+<ul>
+<li><a href="#sec-4-1-1">4.1.1. import a file from another file</a></li>
+<li><a href="#sec-4-1-2">4.1.2. import a file in another directory</a></li>
+</ul>
+</li>
+<li><a href="#sec-4-2">4.2. import from different directory</a></li>
+</ul>
+</li>
+<li><a href="#sec-5">5. </a></li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> data, type, program structure</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Everything is object.
+Not needed to declare a variable before using it. So the first expression with a variable must be an assignment.
+</p>
+</div>
+
+
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> type check</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+Use <code>type()</code> to check a value
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> types</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+<b>Bool</b>
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python">  <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">=True= or =False= , class is =bool=</span>
+  <span style="color: #DFAF8F;">foo</span> = <span style="color: #BFEBBF;">True</span>
+  <span style="color: #DFAF8F;">bar</span> = <span style="color: #BFEBBF;">False</span>
+  <span style="color: #DFAF8F;">baz</span> = 0 <span style="color: #F0DFAF; font-weight: bold;">or</span> <span style="color: #BFEBBF;">True</span>
+<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">these values are considered falsy:</span>
+<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">- None</span>
+<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">- False</span>
+<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">- zero of any numeric type, for example, 0, 0L, 0.0, 0j.</span>
+<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">- any empty sequence, for example, '', (), [].</span>
+<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">- any empty mapping, for example, {}.</span>
+<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">- instances of user-defined classes, if the class defines a __nonzero__() or __len__() method, when that method returns the integer zero or bool value False.2.5</span>
+</pre>
+</div>
+
+<p>
+<b><b>Number</b></b>
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"> <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">=float= or =int=, you can use function =float()= and =int()= to force coerce number types.</span>
+<span style="color: #5F7F5F;">#  </span><span style="color: #7F9F7F;">class is =float= or =int=</span>
+ <span style="color: #DFAF8F;">foo</span> = 3
+ <span style="color: #DFAF8F;">bar</span> = <span style="color: #DCDCCC; font-weight: bold;">int</span><span style="color: #DCDCCC;">(</span>3.2<span style="color: #DCDCCC;">)</span> <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">bar = 3</span>
+ <span style="color: #DFAF8F;">baz</span> = <span style="color: #DCDCCC; font-weight: bold;">float</span><span style="color: #DCDCCC;">(</span><span style="color: #CC9393;">'4.8'</span><span style="color: #DCDCCC;">)</span> <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">baz = 4.8</span>
+</pre>
+</div>
+
+
+<p>
+<b><b>String</b></b>
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-3" class="outline-3">
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> string format</h3>
+<div class="outline-text-3" id="text-1-3">
+<p>
+Use %(&lt;name&gt;)s to capture a value from the flollowing dictionary:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-python"><span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">format method</span>
+<span style="color: #9FC59F;">"Hello, {0} {1}"</span>.<span style="color: #DCDCCC; font-weight: bold;">format</span><span style="color: #DCDCCC;">(</span><span style="color: #9FC59F;">'Mr.'</span>, <span style="color: #9FC59F;">'Trump'</span><span style="color: #DCDCCC;">)</span>
+
+<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">list</span>
+<span style="color: #9FC59F;">"Hello, %s %s"</span> % <span style="color: #DCDCCC;">(</span><span style="color: #9FC59F;">'Mr.'</span>, <span style="color: #9FC59F;">'Trump'</span><span style="color: #DCDCCC;">)</span>
+
+<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">dictionary</span>
+<span style="color: #CC9393;">"a string with your %(name)s and %(age)s"</span> % <span style="color: #DCDCCC;">{</span><span style="color: #CC9393;">"name"</span>:<span style="color: #CC9393;">"katty"</span>, <span style="color: #CC9393;">"age"</span>:28<span style="color: #DCDCCC;">}</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-python">  <span style="color: #5F7F5F;">#  </span><span style="color: #7F9F7F;">Can be quoted by double or single quote.</span>
+  <span style="color: #5F7F5F;">#   </span><span style="color: #7F9F7F;">class is =str=</span>
+  <span style="color: #DFAF8F;">foo</span> = <span style="color: #CC9393;">'foo'</span> <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">foo = "foo"</span>
+
+  <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">format</span>
+  <span style="color: #DFAF8F;">bar</span> = <span style="color: #CC9393;">'%s, %d'</span> % <span style="color: #DCDCCC;">(</span><span style="color: #CC9393;">'bar'</span>, 2<span style="color: #DCDCCC;">)</span> <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">bar = 'bar, 2'</span>
+  <span style="color: #DFAF8F;">baz</span> = <span style="color: #CC9393;">'{1} is {0} {2} old.'</span>.<span style="color: #DCDCCC; font-weight: bold;">format</span><span style="color: #DCDCCC;">(</span>8, <span style="color: #CC9393;">'Kell'</span>, <span style="color: #CC9393;">'month'</span><span style="color: #DCDCCC;">)</span> <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">baz = 'Kell is 8 month old.'</span>
+</pre>
+</div>
+
+<p>
+<b><b>List</b></b>
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"> <span style="color: #5F7F5F;">#  </span><span style="color: #7F9F7F;">List is like array, can be created by the square brackets</span>
+ <span style="color: #DFAF8F;">foo</span> = <span style="color: #DCDCCC;">[</span>1, 2, 3<span style="color: #DCDCCC;">]</span>
+ <span style="color: #DFAF8F;">bar</span> = <span style="color: #DCDCCC;">[</span>x*x <span style="color: #F0DFAF; font-weight: bold;">for</span> x <span style="color: #F0DFAF; font-weight: bold;">in</span> <span style="color: #DCDCCC; font-weight: bold;">range</span><span style="color: #BFEBBF;">(</span>3<span style="color: #BFEBBF;">)</span><span style="color: #DCDCCC;">]</span> <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">bar = [0, 1, 4]</span>
+</pre>
+</div>
+
+
+<p>
+<b><b>Tuple</b></b>
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python">  <span style="color: #5F7F5F;">#</span>
+  <span style="color: #DFAF8F;">foo</span> = <span style="color: #DCDCCC;">(</span><span style="color: #CC9393;">'hello'</span>, 3<span style="color: #DCDCCC;">)</span>
+  <span style="color: #DCDCCC;">(</span>bar, baz<span style="color: #DCDCCC;">)</span> = foo <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">bar = 'hello', baz = 3</span>
+</pre>
+</div>
+
+
+<p>
+<b><b>Dictionary</b></b>
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"> <span style="color: #5F7F5F;">#   </span><span style="color: #7F9F7F;">Just like object in js, created as:</span>
+  <span style="color: #DCDCCC; font-weight: bold;">dict</span> = <span style="color: #DCDCCC;">{</span><span style="color: #CC9393;">'name'</span>: <span style="color: #CC9393;">'Jam'</span>, <span style="color: #CC9393;">'age'</span>:30<span style="color: #DCDCCC;">}</span>
+  <span style="color: #DCDCCC; font-weight: bold;">dict</span><span style="color: #DCDCCC;">[</span><span style="color: #CC9393;">'name'</span><span style="color: #DCDCCC;">]</span> <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">'Jam'</span>
+  <span style="color: #DCDCCC; font-weight: bold;">dict</span>.get<span style="color: #DCDCCC;">(</span><span style="color: #CC9393;">'middle_name'</span>, <span style="color: #CC9393;">'S'</span><span style="color: #DCDCCC;">)</span> <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">'S'</span>
+  <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">But The key is a sring, can not be accessed as a attribute</span>
+</pre>
+</div>
+
+
+<p>
+<b><b>Set</b></b>
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">Created by curly brackets.</span>
+  <span style="color: #DCDCCC; font-weight: bold;">set</span> = <span style="color: #DCDCCC;">{</span>2,3,4<span style="color: #DCDCCC;">}</span>
+</pre>
+</div>
+
+
+<p>
+## class
+</p>
+
+<p>
+A template of class creation
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python">  <span style="color: #F0DFAF; font-weight: bold;">class</span> <span style="color: #7CB8BB;">Fib</span>:
+    <span style="color: #F0DFAF; font-weight: bold;">def</span> <span style="color: #93E0E3;">__init__</span><span style="color: #DCDCCC;">(</span><span style="color: #F0DFAF; font-weight: bold;">self</span>, x<span style="color: #DCDCCC;">)</span>:
+      <span style="color: #F0DFAF; font-weight: bold;">pass</span>
+</pre>
+</div>
+
+<p>
+The code structure in python is presented in incidention and colons.
+Every method must contains <code>self</code> as the first paramter.
+</p>
+
+<p>
+### inheritance
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python">  <span style="color: #F0DFAF; font-weight: bold;">class</span> <span style="color: #7CB8BB;">A</span>:
+    <span style="color: #F0DFAF; font-weight: bold;">pass</span>
+
+  <span style="color: #F0DFAF; font-weight: bold;">class</span> <span style="color: #7CB8BB;">B</span><span style="color: #DCDCCC;">(</span>A<span style="color: #DCDCCC;">)</span>:
+    <span style="color: #F0DFAF; font-weight: bold;">def</span> <span style="color: #93E0E3;">__init</span><span style="color: #DCDCCC;">(</span><span style="color: #F0DFAF; font-weight: bold;">self</span><span style="color: #DCDCCC;">)</span>:
+      A.__init__<span style="color: #DCDCCC;">(</span><span style="color: #F0DFAF; font-weight: bold;">self</span><span style="color: #DCDCCC;">)</span>
+</pre>
+</div>
+
+<p>
+### constructor
+</p>
+
+<p>
+### import
+{% highlight python %}
+  import math
+  from amodule import sth
+{% endhighlight %}
+</p>
+
+<p>
+## language features
+</p>
+
+<p>
+### list comprehension
+</p>
+
+<p>
+### special method
+</p>
+
+<p>
+## core library
+  (make a table about this)
+  string
+  regex
+  math
+</p>
+
+<p>
+## common-used functions
+</p>
+
+<p>
+### module <code>sys</code>
+</p>
+<div class="org-src-container">
+
+<pre class="src src-python">  <span style="color: #F0DFAF; font-weight: bold;">import</span> sys
+  sys.argv<span style="color: #DCDCCC;">[</span>0<span style="color: #DCDCCC;">]</span> <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">the first value is the name of your script</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> oop</h2>
+<div class="outline-text-2" id="text-2">
+</div><div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> class variable</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+variables defined at class level are all class variables.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-python">  <span style="color: #F0DFAF; font-weight: bold;">class</span> <span style="color: #7CB8BB;">My</span>:
+      <span style="color: #DFAF8F;">x</span> = 3
+      <span style="color: #DFAF8F;">y</span> = 4
+      <span style="color: #F0DFAF; font-weight: bold;">def</span> <span style="color: #93E0E3;">__init__</span><span style="color: #DCDCCC;">(</span><span style="color: #F0DFAF; font-weight: bold;">self</span><span style="color: #DCDCCC;">)</span>:
+          <span style="color: #F0DFAF; font-weight: bold;">self</span>.private = <span style="color: #CC9393;">"private"</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> instance variable</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+Since every function contains a <code>self</code>  as first parameter, the variables of instance should be defined with a prefix <code>self</code>.
+</p>
+
+<dl class="org-dl">
+<dt> note </dt><dd>class variables are shared between instances and class. But they are not static, and if an instance defined a variable with same name, the new variable will overwrite the class one.
+</dd>
+</dl>
+
+<hr  />
+</div>
+</div>
+<div id="outline-container-sec-2-3" class="outline-3">
+<h3 id="sec-2-3"><span class="section-number-3">2.3</span> public and private</h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+There is no access decorator in python, all variables defined are public, and can be accessed.
+For private variables, you can define them with double low hysens:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-python">  <span style="color: #F0DFAF; font-weight: bold;">class</span> <span style="color: #7CB8BB;">Your</span>:
+      <span style="color: #DFAF8F;">__x</span> = 3
+      <span style="color: #F0DFAF; font-weight: bold;">def</span> <span style="color: #93E0E3;">__init__</span><span style="color: #DCDCCC;">(</span><span style="color: #F0DFAF; font-weight: bold;">self</span><span style="color: #DCDCCC;">)</span>:
+          <span style="color: #F0DFAF; font-weight: bold;">self</span>.__private = <span style="color: #CC9393;">"private"</span>
+</pre>
+</div>
+<p>
+There is a convension that those variables are private and can not be accessed directly because they are automatically add a prefix <b><span class="underline">&lt;className&gt;</span></b>
+, so the <code>__x</code> and <code>__private</code> be <code>_Your__x</code> and <code>_Your__private</code>.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> special variables</h2>
+<div class="outline-text-2" id="text-3">
+</div><div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> <span class="underline"><span class="underline">name</span></span></h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+The <code>__name__</code> variable is created when the script is imported or executed directly. If the script is executed directly, i.e. as the main process, <code>__name__</code> is assigned to "<span class="underline"><span class="underline">main</span></span>" :
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">$ python myscript.py
+</pre>
+</div>
+
+<p>
+If the script is imported as a module, then <code>__name__</code> is assigned as the module name:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span style="color: #5F7F5F;">## </span><span style="color: #7F9F7F;">file myscript.py</span>
+<span style="color: #F0DFAF; font-weight: bold;">if</span> <span style="color: #DCDCCC; font-weight: bold;">__name__</span> == <span style="color: #CC9393;">"__main__"</span>:
+  <span style="color: #F0DFAF; font-weight: bold;">pass</span>
+<span style="color: #F0DFAF; font-weight: bold;">else</span>:
+  <span style="color: #F0DFAF; font-weight: bold;">pass</span>
+<span style="color: #5F7F5F;">## </span><span style="color: #7F9F7F;">another file</span>
+<span style="color: #F0DFAF; font-weight: bold;">import</span> myscript
+</pre>
+</div>
+
+<p>
+<b>Reason</b>:
+</p>
+
+<p>
+The reason to create such a variable is you can write a module which can be both executed directly and imported, you would definitely not want to execute when just import it.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> import module</h2>
+<div class="outline-text-2" id="text-4">
+<ol class="org-ol">
+<li>Alwasy use absolute import.
+</li>
+<li>Use dot `.` to explicitly use relative import.
+</li>
+</ol>
+
+<p>
+When using absolute import for current package, you can not run the script directly, that will cause an import error. 
+Use module switch instead:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">;;error
+$ python mod0.py  
+
+;; use module switch
+$ python -m pack.mod0
+</pre>
+</div>
+
+<p>
+Relative import:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-python"><span style="color: #5F7F5F;">## </span><span style="color: #7F9F7F;">in A.B.C module</span>
+<span style="color: #F0DFAF; font-weight: bold;">import</span> .mod0  <span style="color: #5F7F5F;">## </span><span style="color: #7F9F7F;">A.B.mod0</span>
+<span style="color: #F0DFAF; font-weight: bold;">from</span> . <span style="color: #F0DFAF; font-weight: bold;">import</span> mod1  <span style="color: #5F7F5F;">## </span><span style="color: #7F9F7F;">A.B.mod1</span>
+<span style="color: #F0DFAF; font-weight: bold;">from</span> .. <span style="color: #F0DFAF; font-weight: bold;">import</span> mod2 <span style="color: #5F7F5F;">## </span><span style="color: #7F9F7F;">A.mod2</span>
+</pre>
+</div>
+
+<p>
+&#x2014;
+<code>Deprecated</code>:
+</p>
+</div>
+<div id="outline-container-sec-4-1" class="outline-3">
+<h3 id="sec-4-1"><span class="section-number-3">4.1</span> import from same directory</h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+If one file is the root path,
+</p>
+</div>
+<div id="outline-container-sec-4-1-1" class="outline-4">
+<h4 id="sec-4-1-1"><span class="section-number-4">4.1.1</span> import a file from another file</h4>
+<div class="outline-text-4" id="text-4-1-1">
+<p>
+File structure is:
+```
+folder/
+  a.py
+  b.py
+```
+Then you can use:
+```python
+## in b.py
+import a
+```
+</p>
+</div>
+</div>
+<div id="outline-container-sec-4-1-2" class="outline-4">
+<h4 id="sec-4-1-2"><span class="section-number-4">4.1.2</span> import a file in another directory</h4>
+<div class="outline-text-4" id="text-4-1-2">
+<p>
+File structure is :
+```
+folder/
+  a.py
+b.py
+```
+You can add a `_<sub>init</sub>__.py` to folder to make it as a package, then import it:
+```python
+## after change
+'''
+folder/
+  <span class="underline"><span class="underline">init</span></span>.py
+  a.py
+b.py
+'''
+## in b.py
+from folder import a
+```
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-4-2" class="outline-3">
+<h3 id="sec-4-2"><span class="section-number-3">4.2</span> import from different directory</h3>
+<div class="outline-text-3" id="text-4-2">
+<p>
+If both the imported file and current file are in different folders, then the file structure should be:
+```
+packs/
+  <span class="underline"><span class="underline">init</span></span>.py
+  pack0/
+    <span class="underline"><span class="underline">init</span></span>.py
+    a.py
+  pack1/
+    b.py
+```
+The parent folder should also be a package, then use:
+```python
+</p>
+<p>
+from packs.pack0 import a
+```
+</p>
+
+<p>
+<b><b>warning:</b></b>
+You can not use the package name at package root:
+```
+packs/
+  <span class="underline"><span class="underline">init</span></span>.py
+  pack0/
+    <span class="underline"><span class="underline">init</span></span>.py
+    a.py
+  core.py
+```
+If one want to use functions in a.py, then `from packs.pack0 import a` will cause an error: ` packs is not a package`.
+</p>
+
+<p>
+In this situation, just use `from pack0 import a`, because it is in the root path.
+</p>
+
+<p>
+&#x2014;
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> </h2>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: <span class="timestamp-wrapper"><span class="timestamp">&lt;2016-10-26 Wed&gt;</span></span></p>
+<p class="author">Author: 杜猛</p>
+<p class="date">Created: 2017-11-13 Mon 19:28</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 25.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.10)</p>
+<p class="validation"></p>
+</div>
+</body>
+</html>

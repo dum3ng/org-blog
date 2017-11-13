@@ -3,8 +3,8 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<title></title>
-<!-- 2017-11-13 Mon 19:28 -->
+<title>args and kwargs in python</title>
+<!-- 2017-11-13 Mon 19:29 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="杜猛" />
@@ -142,38 +142,131 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="content">
-<h1 class="title"></h1>
+<h1 class="title">args and kwargs in python</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#sec-1">1. L</a></li>
-<li><a href="#sec-2">2. R</a></li>
+<li><a href="#sec-1">1. used in function defination</a></li>
+<li><a href="#sec-2">2. used as unpack operator</a></li>
 </ul>
 </div>
 </div>
+
 <div id="outline-container-sec-1" class="outline-2">
-<h2 id="sec-1"><span class="section-number-2">1</span> L</h2>
+<h2 id="sec-1"><span class="section-number-2">1</span> used in function defination</h2>
 <div class="outline-text-2" id="text-1">
-<ul class="org-ul">
-<li><a href="layout_of_web_page.html">layout of web page</a>
-</li>
-</ul>
+<p>
+<code>args</code> can allow one to enter any number parameters, they are wrapped in an array:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span style="color: #F0DFAF; font-weight: bold;">def</span> <span style="color: #93E0E3;">hello</span><span style="color: #DCDCCC;">(</span>name, day=<span style="color: #CC9393;">'today'</span>, *args<span style="color: #DCDCCC;">)</span>:
+  <span style="color: #F0DFAF; font-weight: bold;">return</span> <span style="color: #CC9393;">'hello {name}, {day}, {a},{b}'</span>.<span style="color: #DCDCCC; font-weight: bold;">format</span><span style="color: #DCDCCC;">(</span>name=name, day=day, a=args<span style="color: #BFEBBF;">[</span>0<span style="color: #BFEBBF;">]</span>, b=args<span style="color: #BFEBBF;">[</span>1<span style="color: #BFEBBF;">]</span><span style="color: #DCDCCC;">)</span>
+</pre>
+</div>
+<p>
+Now call
+</p>
+<div class="org-src-container">
+
+<pre class="src src-python">hello<span style="color: #DCDCCC;">(</span><span style="color: #CC9393;">'kael'</span>,<span style="color: #CC9393;">'this day'</span>, 3, 4<span style="color: #DCDCCC;">)</span>
+</pre>
+</div>
+<p>
+Try yourself:
+</p>
+<pre><code class='lang-klipse-python'>
+def hello(name, day='today', *args):
+  return 'hello {name}, {day}, {a},{b}'.format(name=name, day=day, a=args[0], b=args[1])
+print(hello('kael','this day', 3, 4))
+</code></pre>
+
+
+<p>
+<code>**kwargs</code> can allow one to enter any optional number key-value parameter.
+The <code>*args* must come before =**kwargs</code>, a mixed example:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-python"><span style="color: #F0DFAF; font-weight: bold;">def</span> <span style="color: #93E0E3;">foo</span><span style="color: #DCDCCC;">(</span>a, *args, **kwargs<span style="color: #DCDCCC;">)</span>:
+  <span style="color: #F0DFAF; font-weight: bold;">pass</span>
+</pre>
+</div>
+
+<p>
+Now call it
+</p>
+<div class="org-src-container">
+
+<pre class="src src-python">foo<span style="color: #DCDCCC;">(</span>3, 4, 5, operation=<span style="color: #CC9393;">'add'</span>, out=<span style="color: #CC9393;">'std'</span><span style="color: #DCDCCC;">)</span>
+</pre>
 </div>
 </div>
+</div>
+
 <div id="outline-container-sec-2" class="outline-2">
-<h2 id="sec-2"><span class="section-number-2">2</span> R</h2>
+<h2 id="sec-2"><span class="section-number-2">2</span> used as unpack operator</h2>
 <div class="outline-text-2" id="text-2">
-<ul class="org-ul">
-<li><a href="responsive_web_design.html">responsive web design</a>
-</li>
-</ul>
+<p>
+The <code>*</code> and <code>**</code> can be used as unpack operator in function call:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-python"><span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">* can unpack an array</span>
+<span style="color: #F0DFAF; font-weight: bold;">def</span> <span style="color: #93E0E3;">foo</span><span style="color: #DCDCCC;">(</span>a, b, c<span style="color: #DCDCCC;">)</span>:
+  <span style="color: #F0DFAF; font-weight: bold;">pass</span>
+
+<span style="color: #DFAF8F;">d</span> = <span style="color: #DCDCCC;">[</span>1, 2, 3<span style="color: #DCDCCC;">]</span>
+foo<span style="color: #DCDCCC;">(</span>*d<span style="color: #DCDCCC;">)</span>
+
+<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">and ** can unpack a dictionary</span>
+<span style="color: #F0DFAF; font-weight: bold;">def</span> <span style="color: #93E0E3;">bar</span><span style="color: #DCDCCC;">(</span>**kwargs<span style="color: #DCDCCC;">)</span>:
+  <span style="color: #F0DFAF; font-weight: bold;">pass</span>
+
+<span style="color: #DFAF8F;">m</span> = <span style="color: #DCDCCC;">{</span><span style="color: #CC9393;">'a'</span>:3, <span style="color: #CC9393;">'b'</span>:4<span style="color: #CC9393;">'}</span>
+<span style="color: #CC9393;">bar(**m)</span>
+
+<span style="color: #CC9393;"># this can be useful in string format</span>
+<span style="color: #CC9393;">data={'</span>name<span style="color: #CC9393;">':'</span>jim<span style="color: #CC9393;">', '</span>place<span style="color: #CC9393;">':'</span>china<span style="color: #CC9393;">'}</span>
+<span style="color: #CC9393;">'</span><span style="color: #BFEBBF;">{</span>name<span style="color: #BFEBBF;">}</span>, you are <span style="color: #F0DFAF; font-weight: bold;">in</span> <span style="color: #BFEBBF;">{</span>place<span style="color: #BFEBBF;">}</span><span style="color: #CC9393;">'.format(**data)</span>
+</pre>
+</div>
+
+<p>
+<b>TIY</b>:
+</p>
+<pre><code class='lang-klipse-python'>
+def bar(**kwargs):
+  pass
+</code></pre>
+
+
+<p>
+Note that this does not work in normal expression.
+</p>
+
+
+
+<link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/viebel/klipse/master/dist/codemirror.css">
+
+<script>
+    window.klipse_settings = {
+        selector_eval_python_client: '.lang-klipse-python', // css selector for the html elements you want to klipsify
+ selector_eval_js: '.lang-klipse-js',
+selector_eval_ruby: '.lang-klipse-ruby',
+
+    };
+</script>
+<script type='text/javascript' src="https://cdn.rawgit.com/viebel/klipse/master/dist/klipse_plugin.min.js"></script>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
+<p class="date">Date: <span class="timestamp-wrapper"><span class="timestamp">&lt;2016-12-24 Sat&gt;</span></span></p>
 <p class="author">Author: 杜猛</p>
-<p class="date">Created: 2017-11-13 Mon 19:28</p>
+<p class="date">Created: 2017-11-13 Mon 19:29</p>
 <p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 25.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.10)</p>
 <p class="validation"></p>
 </div>

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<title></title>
+<title>wsgi</title>
 <!-- 2017-11-13 Mon 19:28 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
@@ -88,11 +88,6 @@
     { background-color: #ffff00; color: #000000; font-weight: bold; }
   /*]]>*/-->
 </style>
-<link href="https://cdn.bootcss.com/normalize/5.0.0/normalize.css" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="https://bootswatch.com/4/flatly/bootstrap.min.css" />
-<script src="https://cdn.rawgit.com/Matt-Esch/virtual-dom/master/dist/virtual-dom.js"></script>
-<link rel="stylesheet" type="text/css" href="../../static/mystyle.css" />
-<script src='../../static/myscript.js' ></script>
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -142,32 +137,52 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="content">
-<h1 class="title"></h1>
+<h1 class="title">wsgi</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#sec-1">1. L</a></li>
-<li><a href="#sec-2">2. R</a></li>
+<li><a href="#sec-1">1. what is wsgi</a></li>
+<li><a href="#sec-2">2. a simple wsgi example</a></li>
 </ul>
 </div>
 </div>
 <div id="outline-container-sec-1" class="outline-2">
-<h2 id="sec-1"><span class="section-number-2">1</span> L</h2>
+<h2 id="sec-1"><span class="section-number-2">1</span> what is wsgi</h2>
 <div class="outline-text-2" id="text-1">
-<ul class="org-ul">
-<li><a href="layout_of_web_page.html">layout of web page</a>
-</li>
-</ul>
+<p>
+<code>WSGI</code> is Web Server Gateway Interface.
+It defines the interface between application and server.
+An application is how to respond to a request. It only get the request from server, and send back a response.
+A server is due to the work of url mapping, concurrency, etc.
+</p>
 </div>
 </div>
+
 <div id="outline-container-sec-2" class="outline-2">
-<h2 id="sec-2"><span class="section-number-2">2</span> R</h2>
+<h2 id="sec-2"><span class="section-number-2">2</span> a simple wsgi example</h2>
 <div class="outline-text-2" id="text-2">
-<ul class="org-ul">
-<li><a href="responsive_web_design.html">responsive web design</a>
-</li>
-</ul>
+<div class="org-src-container">
+
+<pre class="src src-python">    <span style="color: #F0DFAF; font-weight: bold;">from</span> wsgiref <span style="color: #F0DFAF; font-weight: bold;">import</span> simple_server
+
+    <span style="color: #F0DFAF; font-weight: bold;">def</span> <span style="color: #93E0E3;">hello</span><span style="color: #DCDCCC;">(</span>environ, start_response<span style="color: #DCDCCC;">)</span>:
+        start_response<span style="color: #DCDCCC;">(</span><span style="color: #CC9393;">'200 ok'</span>, <span style="color: #BFEBBF;">[</span><span style="color: #D0BF8F;">(</span><span style="color: #CC9393;">'Content-type'</span>, <span style="color: #CC9393;">'text/html'</span><span style="color: #D0BF8F;">)</span><span style="color: #BFEBBF;">]</span><span style="color: #DCDCCC;">)</span>
+        <span style="color: #F0DFAF; font-weight: bold;">return</span> <span style="color: #DCDCCC;">[</span><span style="color: #CC9393;">'&lt;html&gt;&lt;body&gt;&lt;h1&gt;hello&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;'</span>,<span style="color: #DCDCCC;">]</span> <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">note here is a comma</span>
+
+    <span style="color: #DFAF8F;">httpd</span> = simple_server.WSGIServer<span style="color: #DCDCCC;">(</span>
+        <span style="color: #BFEBBF;">(</span><span style="color: #CC9393;">''</span>,8000<span style="color: #BFEBBF;">)</span>,
+        simple_server.WSGIRequestHandler,
+    <span style="color: #DCDCCC;">)</span>
+    httpd.set_app<span style="color: #DCDCCC;">(</span>hello<span style="color: #DCDCCC;">)</span>
+    httpd.serve_forever<span style="color: #DCDCCC;">()</span>
+</pre>
+</div>
+
+<p>
+<a href="http://www.xml.com/pub/a/2006/09/27/introducing-wsgi-pythons-secret-web-weapon.html">reference part 1</a>
+<a href="https://www.xml.com/pub/a/2006/10/04/introducing-wsgi-pythons-secret-web-weapon-part-two.html">reference part 2</a>
+</p>
 </div>
 </div>
 </div>

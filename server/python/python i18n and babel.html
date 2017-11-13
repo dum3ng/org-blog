@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>python i18n and babel</title>
+<!-- 2017-11-13 Mon 19:29 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<meta  name="author" content="杜猛" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">python i18n and babel</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. use `gettext` module</a></li>
+<li><a href="#sec-2">2. use `Babel` to generate files</a>
+<ul>
+<li><a href="#sec-2-1">2.1. step 1: extract messages</a></li>
+</ul>
+</li>
+<li><a href="#sec-3">3. something to note</a></li>
+<li><a href="#sec-4">4. using in Flask</a></li>
+</ul>
+</div>
+</div>
+<p>
+Python has built-in i18n support, it exists in `gettext` module.
+</p>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> use `gettext` module</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+If you just use one language at one time, then use:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span style="color: #F0DFAF; font-weight: bold;">import</span> gettext
+
+<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">the `language` will be decided to current system</span>
+gettext.bindtextdomain<span style="color: #DCDCCC;">(</span><span style="color: #CC9393;">'profile'</span>,<span style="color: #CC9393;">'appname/locale'</span><span style="color: #DCDCCC;">)</span> 
+<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">.mo file is searched in  `appname/locale/language/LC_MESSAGES/profile.mo`</span>
+<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">change to another domain</span>
+<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">.mo file is searched in  `appname/locale/language/LC_MESSAGES/setting.mo</span>
+gettext.textdomain<span style="color: #DCDCCC;">(</span><span style="color: #CC9393;">'setting'</span><span style="color: #DCDCCC;">)</span>
+<span style="color: #DFAF8F;">_</span> = gettext.gettext<span style="color: #DCDCCC;">()</span>
+<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">usage</span>
+<span style="color: #F0DFAF; font-weight: bold;">print</span><span style="color: #DCDCCC;">(</span>_<span style="color: #BFEBBF;">(</span><span style="color: #CC9393;">'hello'</span><span style="color: #BFEBBF;">)</span><span style="color: #DCDCCC;">)</span>
+</pre>
+</div>
+
+<p>
+If you want to change language on the fly, then you can use global class:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span style="color: #F0DFAF; font-weight: bold;">print</span><span style="color: #DCDCCC;">(</span><span style="color: #CC9393;">'heool'</span><span style="color: #DCDCCC;">)</span>
+<span style="color: #F0DFAF; font-weight: bold;">def</span> <span style="color: #93E0E3;">add</span><span style="color: #DCDCCC;">()</span>:
+    <span style="color: #F0DFAF; font-weight: bold;">return</span> 3
+add<span style="color: #DCDCCC;">()</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span style="color: #F0DFAF; font-weight: bold;">import</span> gettext
+
+<span style="color: #DFAF8F;">path</span> = <span style="color: #CC9393;">'path/to/locale'</span>
+<span style="color: #DFAF8F;">lang1</span> = gettext.translation<span style="color: #DCDCCC;">(</span><span style="color: #CC9393;">'domain'</span>,path, languages=<span style="color: #BFEBBF;">[</span><span style="color: #CC9393;">'en'</span><span style="color: #BFEBBF;">]</span><span style="color: #DCDCCC;">)</span>
+lang1.install<span style="color: #DCDCCC;">()</span> <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">this will make `_` function to python build-in namespace</span>
+<span style="color: #F0DFAF; font-weight: bold;">print</span><span style="color: #DCDCCC;">(</span>_<span style="color: #BFEBBF;">(</span><span style="color: #CC9393;">'hello'</span><span style="color: #BFEBBF;">)</span><span style="color: #DCDCCC;">)</span> <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">'hello'</span>
+
+<span style="color: #DFAF8F;">lang2</span> = gettext.translation<span style="color: #DCDCCC;">(</span><span style="color: #CC9393;">'domain'</span>,path, languages=<span style="color: #BFEBBF;">[</span><span style="color: #CC9393;">'zh_CN'</span><span style="color: #BFEBBF;">]</span><span style="color: #DCDCCC;">)</span>
+lang2.install<span style="color: #DCDCCC;">()</span>
+<span style="color: #F0DFAF; font-weight: bold;">print</span><span style="color: #DCDCCC;">(</span>_<span style="color: #BFEBBF;">(</span><span style="color: #CC9393;">'hello'</span><span style="color: #BFEBBF;">)</span><span style="color: #DCDCCC;">)</span> <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">'&#20320;&#22909;'</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> use `Babel` to generate files</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+See the [document](<a href="http://babel.pocoo.org/en/latest/messages.html#messages">http://babel.pocoo.org/en/latest/messages.html#messages</a>).
+</p>
+
+<p>
+In the `setup.py` of the root package, you need not to do anything if `babel` is installed and using `setuptools` in this file. Just run `python setup.py COMMAND`.
+</p>
+</div>
+
+<div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> step 1: extract messages</h3>
+<div class="outline-text-3" id="text-2-1">
+<div class="org-src-container">
+
+<pre class="src src-bash">$ python setup.py extract_messages -o appname/locale messages.pot
+</pre>
+</div>
+
+<p>
+This will extract  messages from source files to appname/locale/messages.pot. That is to search all the functions `<sub>('string')</sub>`.
+`pot` is `Portable Object Template`.
+Now we can use this template file to generate different locale po file.
+</p>
+
+<p>
+### step 2: init locale file
+```bash
+$ python setup.py init<sub>catalog</sub> -l zh<sub>CN</sub> -i appname/locale/messages.pot -d appname/locale &#x2013;domain appname
+```
+This will create `appname/locale/zh<sub>CN</sub>/LC<sub>MESSAGES</sub>/appname.po`.
+</p>
+
+<p>
+### step 3: compile po file
+```bash
+$ python setup.py compile<sub>catalog</sub> -d appname/locale -l zh<sub>CN</sub> &#x2013;domain appname
+```
+This will compile the `appname.po` file into `appname.mo`.
+</p>
+
+<p>
+<b><b>configure file</b></b>
+Use option parameter in command line is tedious, you can create a `setup.cfg` file to set these paramters:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-conf"><span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">setup.cfg file</span>
+[<span style="color: #7CB8BB;">compile_catalog</span>]
+<span style="color: #DFAF8F;">directory</span>=appname/locale
+<span style="color: #DFAF8F;">domain</span>=appname
+
+[<span style="color: #7CB8BB;">extract_messages</span>]
+<span style="color: #DFAF8F;">output-file</span>=appname/locale/messages.pot
+
+[<span style="color: #7CB8BB;">init_catalog</span>]
+<span style="color: #DFAF8F;">input-file</span>=appname/locale/messages.pot
+<span style="color: #DFAF8F;">domain</span>=appname
+<span style="color: #DFAF8F;">output-dir</span>=appname/locale
+
+[<span style="color: #7CB8BB;">update_catalog</span>]
+<span style="color: #DFAF8F;">input-file</span>=appname/locale/messages.pot
+<span style="color: #DFAF8F;">domain</span>=appname
+<span style="color: #DFAF8F;">output-dir</span>=appname/locale
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> something to note</h2>
+<div class="outline-text-2" id="text-3">
+<ul class="org-ul">
+<li>The domain name is default to the name of `pot` file.
+</li>
+<li>The po file when using `compile<sub>catalog`</sub> is searched under base directory postfixed with locale(which is identified with `-l`).
+</li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> using in Flask</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+Flask use jinja2 as template engine, and jinja2 has extension of i18n. But I have not find a way to customize the jinja2 enviroment a flask app use without making a subclass of `Flask`.
+An alternative method is to use context processor:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span style="color: #7CB8BB;">@app.context_processor</span>
+<span style="color: #F0DFAF; font-weight: bold;">def</span> <span style="color: #93E0E3;">add_i18n</span><span style="color: #DCDCCC;">()</span>:
+  <span style="color: #F0DFAF; font-weight: bold;">return</span> <span style="color: #DCDCCC; font-weight: bold;">dict</span><span style="color: #DCDCCC;">(</span>_=_<span style="color: #DCDCCC;">)</span>
+</pre>
+</div>
+
+<p>
+This will add the global `<sub>`</sub> (alias of `gettext`) to the render context. 
+Now you can use `<sub>`</sub> in your templates.
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: 杜猛</p>
+<p class="date">Created: 2017-11-13 Mon 19:29</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 25.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.10)</p>
+<p class="validation"></p>
+</div>
+</body>
+</html>

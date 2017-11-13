@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>django: walk through an API driven app</title>
+<!-- 2017-11-13 Mon 19:29 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<meta  name="author" content="杜猛" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">django: walk through an API driven app</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. django</a>
+<ul>
+<li><a href="#sec-1-1">1.1. setup</a></li>
+<li><a href="#sec-1-2">1.2. write an api</a>
+<ul>
+<li><a href="#sec-1-2-1">1.2.1. write the handler function</a></li>
+<li><a href="#sec-1-2-2">1.2.2. configure url</a></li>
+</ul>
+</li>
+<li><a href="#sec-1-3">1.3. use ajax to <code>POST</code></a>
+<ul>
+<li><a href="#sec-1-3-1">1.3.1. csrf protection</a></li>
+</ul>
+</li>
+<li><a href="#sec-1-4">1.4. authentication</a>
+<ul>
+<li><a href="#sec-1-4-1">1.4.1. authentication related</a></li>
+<li><a href="#sec-1-4-2">1.4.2. templates</a></li>
+</ul>
+</li>
+<li><a href="#sec-1-5">1.5. </a></li>
+<li><a href="#sec-1-6">1.6. i18n</a>
+<ul>
+<li><a href="#sec-1-6-1">1.6.1. in python code</a></li>
+<li><a href="#sec-1-6-2">1.6.2. in template</a></li>
+<li><a href="#sec-1-6-3">1.6.3. setting.py</a></li>
+</ul>
+</li>
+<li><a href="#sec-1-7">1.7. deployment</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> django</h2>
+<div class="outline-text-2" id="text-1">
+</div><div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> setup</h3>
+<div class="outline-text-3" id="text-1-1">
+<div class="org-src-container">
+
+<pre class="src src-sh">$ pip install django
+$ django-admin startproject myproject
+$ cd myproject
+$ python manage.py runserver
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> write an api</h3>
+<div class="outline-text-3" id="text-1-2">
+</div><div id="outline-container-sec-1-2-1" class="outline-4">
+<h4 id="sec-1-2-1"><span class="section-number-4">1.2.1</span> write the handler function</h4>
+</div>
+<div id="outline-container-sec-1-2-2" class="outline-4">
+<h4 id="sec-1-2-2"><span class="section-number-4">1.2.2</span> configure url</h4>
+</div>
+</div>
+
+<div id="outline-container-sec-1-3" class="outline-3">
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> use ajax to <code>POST</code></h3>
+<div class="outline-text-3" id="text-1-3">
+</div><div id="outline-container-sec-1-3-1" class="outline-4">
+<h4 id="sec-1-3-1"><span class="section-number-4">1.3.1</span> csrf protection</h4>
+</div>
+</div>
+
+<div id="outline-container-sec-1-4" class="outline-3">
+<h3 id="sec-1-4"><span class="section-number-3">1.4</span> authentication</h3>
+<div class="outline-text-3" id="text-1-4">
+</div><div id="outline-container-sec-1-4-1" class="outline-4">
+<h4 id="sec-1-4-1"><span class="section-number-4">1.4.1</span> authentication related</h4>
+<div class="outline-text-4" id="text-1-4-1">
+</div><ol class="org-ol"><li><a id="sec-1-4-1-1" name="sec-1-4-1-1"></a>redirect after login<br  /><div class="outline-text-5" id="text-1-4-1-1">
+<div class="org-src-container">
+
+<pre class="src src-python"><span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">in the settings.py</span>
+<span style="color: #DFAF8F;">LOGIN_URL</span> = <span style="color: #CC9393;">'/my/login/'</span> <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">default is /accounts/login/</span>
+<span style="color: #DFAF8F;">LOGIN_REDIRECT_URL</span> = <span style="color: #CC9393;">'/customized/url/'</span> <span style="color: #5F7F5F;">#</span><span style="color: #7F9F7F;">default is /accounts/profile/</span>
+</pre>
+</div>
+
+<p>
+The <code>LOGIN_URL</code> is required when the decorator <code>@login_required</code> is added. That decorator will redirect to the <code>LOGIN_URL</code> if requested a url the user has not been authenticated.
+</p>
+
+<p>
+The <code>LOGIN_REDIRECT_URL</code> is used when the <code>next</code> parameter in the login page, if the next url is not safe, i.e. is empty, then a redirect reponse using this setting will be returned.
+</p>
+
+<p>
+In the login page, one should add a hidden input with the name
+</p>
+</div>
+</li></ol>
+</div>
+
+<div id="outline-container-sec-1-4-2" class="outline-4">
+<h4 id="sec-1-4-2"><span class="section-number-4">1.4.2</span> templates</h4>
+<div class="outline-text-4" id="text-1-4-2">
+</div><ol class="org-ol"><li><a id="sec-1-4-2-1" name="sec-1-4-2-1"></a><code>user</code> in template context<br  /><div class="outline-text-5" id="text-1-4-2-1">
+<p>
+If you use the <code>django.contrib.auth.context_processor.auth</code>, then the <code>user</code> will be added to the request context. Only this user for authentication requirement, and when you want to show information of other users, do NOT use <code>user</code> as a key in the context of template. That may cause unwanted behaviour.
+</p>
+</div>
+</li>
+
+<li><a id="sec-1-4-2-2" name="sec-1-4-2-2"></a>sdf<br  /></li></ol>
+</div>
+</div>
+
+<div id="outline-container-sec-1-5" class="outline-3">
+<h3 id="sec-1-5"><span class="section-number-3">1.5</span> </h3>
+</div>
+<div id="outline-container-sec-1-6" class="outline-3">
+<h3 id="sec-1-6"><span class="section-number-3">1.6</span> i18n</h3>
+<div class="outline-text-3" id="text-1-6">
+</div><div id="outline-container-sec-1-6-1" class="outline-4">
+<h4 id="sec-1-6-1"><span class="section-number-4">1.6.1</span> in python code</h4>
+<div class="outline-text-4" id="text-1-6-1">
+<div class="org-src-container">
+
+<pre class="src src-python">  <span style="color: #F0DFAF; font-weight: bold;">from</span> django.utils.translation <span style="color: #F0DFAF; font-weight: bold;">import</span> gettext <span style="color: #F0DFAF; font-weight: bold;">as</span> _
+
+  <span style="color: #F0DFAF; font-weight: bold;">def</span> <span style="color: #93E0E3;">my_view</span><span style="color: #DCDCCC;">(</span>request<span style="color: #DCDCCC;">)</span>:
+      <span style="color: #DFAF8F;">some</span> = _<span style="color: #DCDCCC;">(</span><span style="color: #CC9393;">"thing"</span><span style="color: #DCDCCC;">)</span>
+      <span style="color: #F0DFAF; font-weight: bold;">return</span> HttpResponse<span style="color: #DCDCCC;">(</span>some<span style="color: #DCDCCC;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-6-2" class="outline-4">
+<h4 id="sec-1-6-2"><span class="section-number-4">1.6.2</span> in template</h4>
+<div class="outline-text-4" id="text-1-6-2">
+<div class="org-src-container">
+
+<pre class="src src-html"># if you want to use the tag 'trans' or 'blocktrans', you should load i18n first
+{% load i18n %}
+
+{% trans <span style="color: #CC9393;">"sometext"</span> %}
+
+# or you can directly use =_= function
+{{ _(<span style="color: #CC9393;">"someothertext"</span>) }}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-6-3" class="outline-4">
+<h4 id="sec-1-6-3"><span class="section-number-4">1.6.3</span> setting.py</h4>
+<div class="outline-text-4" id="text-1-6-3">
+<div class="org-src-container">
+
+<pre class="src src-python">  <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">add the locale middleware</span>
+  <span style="color: #DFAF8F;">MIDDLE</span> = <span style="color: #DCDCCC;">[</span>
+      ...,
+      <span style="color: #CC9393;">'django.middleware.locale.LocaleMiddleware'</span>,
+  <span style="color: #DCDCCC;">]</span>
+<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">set the directory to find translation files</span>
+<span style="color: #DFAF8F;">LOCALE_PATHS</span> = <span style="color: #DCDCCC;">[</span>
+    os.path.join<span style="color: #BFEBBF;">(</span>BASE_DIR, <span style="color: #CC9393;">'locale'</span><span style="color: #BFEBBF;">)</span>,
+    <span style="color: #CC9393;">'/var/local/translations/locale'</span>,
+<span style="color: #DCDCCC;">]</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-sec-1-7" class="outline-3">
+<h3 id="sec-1-7"><span class="section-number-3">1.7</span> deployment</h3>
+<div class="outline-text-3" id="text-1-7">
+<p>
+*
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: 杜猛</p>
+<p class="date">Created: 2017-11-13 Mon 19:29</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 25.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.10)</p>
+<p class="validation"></p>
+</div>
+</body>
+</html>
