@@ -1,0 +1,437 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>clojure: introduction</title>
+<!-- 2017-11-13 Mon 18:54 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<meta  name="author" content="杜猛" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<link href="https://cdn.bootcss.com/normalize/5.0.0/normalize.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="https://bootswatch.com/4/flatly/bootstrap.min.css" />
+<script src="https://cdn.rawgit.com/Matt-Esch/virtual-dom/master/dist/virtual-dom.js"></script>
+<link rel="stylesheet" type="text/css" href="../static/mystyle.css" />
+<script src='../static/myscript.js'></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/javascript" src="http://orgmode.org/mathjax/MathJax.js"></script>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+    MathJax.Hub.Config({
+        // Only one of the two following lines, depending on user settings
+        // First allows browser-native MathML display, second forces HTML/CSS
+        //  config: ["MMLorHTML.js"], jax: ["input/TeX"],
+            jax: ["input/TeX", "output/HTML-CSS"],
+        extensions: ["tex2jax.js","TeX/AMSmath.js","TeX/AMSsymbols.js",
+                     "TeX/noUndefined.js"],
+        tex2jax: {
+            inlineMath: [ ["\\(","\\)"] ],
+            displayMath: [ ['$$','$$'], ["\\[","\\]"], ["\\begin{displaymath}","\\end{displaymath}"] ],
+            skipTags: ["script","noscript","style","textarea","pre","code"],
+            ignoreClass: "tex2jax_ignore",
+            processEscapes: false,
+            processEnvironments: true,
+            preview: "TeX"
+        },
+        showProcessingMessages: true,
+        displayAlign: "center",
+        displayIndent: "2em",
+
+        "HTML-CSS": {
+             scale: 100,
+             availableFonts: ["STIX","TeX"],
+             preferredFont: "TeX",
+             webFont: "TeX",
+             imageFont: "TeX",
+             showMathMenu: true,
+        },
+        MMLorHTML: {
+             prefer: {
+                 MSIE:    "MML",
+                 Firefox: "MML",
+                 Opera:   "HTML",
+                 other:   "HTML"
+             }
+        }
+    });
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">clojure: introduction</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. clojure introduction</a>
+<ul>
+<li><a href="#sec-1-1">1.1. basic types</a>
+<ul>
+<li><a href="#sec-1-1-1">1.1.1. symbol</a></li>
+</ul>
+</li>
+<li><a href="#sec-1-2">1.2. namespace</a>
+<ul>
+<li><a href="#sec-1-2-1">1.2.1. refer</a></li>
+<li><a href="#sec-1-2-2">1.2.2. alias</a></li>
+<li><a href="#sec-1-2-3">1.2.3. use</a></li>
+<li><a href="#sec-1-2-4">1.2.4. require</a></li>
+<li><a href="#sec-1-2-5">1.2.5. import</a></li>
+<li><a href="#sec-1-2-6">1.2.6. common usage</a></li>
+</ul>
+</li>
+<li><a href="#sec-1-3">1.3. java interop</a>
+<ul>
+<li><a href="#sec-1-3-1">1.3.1. Member access</a></li>
+<li><a href="#sec-1-3-2">1.3.2. The Dot special form</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> clojure introduction</h2>
+<div class="outline-text-2" id="text-1">
+</div><div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> basic types</h3>
+<div class="outline-text-3" id="text-1-1">
+<dl class="org-dl">
+<dt> boolean   </dt><dd>true | false
+</dd>
+<dt> number    </dt><dd>3
+</dd>
+<dt> string    </dt><dd>"Hello"
+</dd>
+<dt> character </dt><dd>\a
+</dd>
+<dt> ratio     </dt><dd>3/4
+</dd>
+<dt> set       </dt><dd>#{:a :b :c}    (set [coll])
+</dd>
+<dt> list      </dt><dd>'(a b c )   (list a b c)
+</dd>
+<dt> map       </dt><dd>{:a 1 :b 2 :c 3 }  (hash-map :a 1 :b 2 :c 3 )
+</dd>
+<dt> vector    </dt><dd>[:a :b :c]   (vector :a :b :c)
+</dd>
+<dt> nil       </dt><dd>nil
+</dd>
+<dt> symbol    </dt><dd>'sym
+</dd>
+<dt> keyword   </dt><dd>:key
+</dd>
+</dl>
+
+<hr  />
+<dl class="org-dl">
+<dt> <b>Note</b> </dt><dd>In clojure, only  nil  and  false  is logically falsy.
+</dd>
+</dl>
+</div>
+
+<div id="outline-container-sec-1-1-1" class="outline-4">
+<h4 id="sec-1-1-1"><span class="section-number-4">1.1.1</span> symbol</h4>
+<div class="outline-text-4" id="text-1-1-1">
+<p>
+The symbol is a little confusing if you come from other OO language.
+<b>Symbol</b> just means the literal characters you used to represent your vars, while `var` is the address which the `object` you stored at.
+</p>
+
+<pre class="example">
+    symbol ----&gt; var -----&gt;object
+</pre>
+<hr  />
+<p>
+If you type the symbol directly in the REPL, it evaluate it, and if the symbol does not exist , an error will be thrown.
+So you should add a single quote before symbol when you just means to treat the symbol as `data` while not an `expression`:
+</p>
+
+<pre class="example">
+    user=&gt; (1 2 3 ) ; error , 1 is treated a function
+    user=&gt; '(1 2 3) ; treat the symbol as data,i.e a list
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> namespace</h3>
+<div class="outline-text-3" id="text-1-2">
+</div><div id="outline-container-sec-1-2-1" class="outline-4">
+<h4 id="sec-1-2-1"><span class="section-number-4">1.2.1</span> refer</h4>
+<div class="outline-text-4" id="text-1-2-1">
+<div class="org-src-container">
+
+<pre class="src src-clojure">  <span style="color: #7CB8BB;">clojure.core</span><span style="color: #DCDCCC; background-color: #3F3F3F;">/</span>refer 'somens
+  <span style="color: #7CB8BB;">/</span><span style="color: #DCDCCC; background-color: #3F3F3F;">/</span>you can use filter
+  <span style="color: #7CB8BB;">clojure.core</span><span style="color: #DCDCCC; background-color: #3F3F3F;">/</span>refer 'somens <span style="color: #BFEBBF;">:exclude</span> <span style="color: #DCDCCC;">[</span>'excluded,.. <span style="color: #DCDCCC;">]</span>
+  <span style="color: #7CB8BB;">clojure.core</span><span style="color: #DCDCCC; background-color: #3F3F3F;">/</span>refer 'somens <span style="color: #BFEBBF;">:only</span> <span style="color: #DCDCCC;">[</span>'want,in<span style="color: #DCDCCC;">]</span>
+</pre>
+</div>
+
+<p>
+When using refer, REPL just update current object map and add the functions in the namespace you refered to it. So you can directly use them while not necessary to write a prefix.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-2-2" class="outline-4">
+<h4 id="sec-1-2-2"><span class="section-number-4">1.2.2</span> alias</h4>
+<div class="outline-text-4" id="text-1-2-2">
+<div class="org-src-container">
+
+<pre class="src src-clojure">    <span style="color: #7CB8BB;">clojure.core</span><span style="color: #DCDCCC; background-color: #3F3F3F;">/</span>alias 'short 'somens
+</pre>
+</div>
+
+<p>
+There is a special var called `*ns*` binded with current namespace. You can manipulate this var to change current space. Usually we use `ns  ` macro to do this.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-clojure">    <span style="color: #DCDCCC;">(</span><span style="color: #F0DFAF; font-weight: bold;">ns</span> <span style="color: #7CB8BB;">new-namespace</span><span style="color: #DCDCCC;">)</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-1-2-3" class="outline-4">
+<h4 id="sec-1-2-3"><span class="section-number-4">1.2.3</span> use</h4>
+<div class="outline-text-4" id="text-1-2-3">
+<div class="org-src-container">
+
+<pre class="src src-clojure">  <span style="color: #DCDCCC;">(</span><span style="color: #F0DFAF; font-weight: bold;">ns</span> <span style="color: #7CB8BB;">new-namespace</span><span style="color: #DCDCCC;">)</span>
+  <span style="color: #DCDCCC;">(</span>use '<span style="color: #7CB8BB;">clojure.data.json</span><span style="color: #DCDCCC;">)</span>
+</pre>
+</div>
+<p>
+The `use` macro can import all the functions in that namespace like those are written in this file. This could cause name collision and may be confusing because you use some function that has not been defined.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-2-4" class="outline-4">
+<h4 id="sec-1-2-4"><span class="section-number-4">1.2.4</span> require</h4>
+<div class="outline-text-4" id="text-1-2-4">
+<div class="org-src-container">
+
+<pre class="src src-clojure">  <span style="color: #DCDCCC;">(</span><span style="color: #F0DFAF; font-weight: bold;">ns</span> <span style="color: #7CB8BB;">new-namespace</span><span style="color: #DCDCCC;">)</span>
+  <span style="color: #DCDCCC;">(</span>require '<span style="color: #BFEBBF;">(</span><span style="color: #7CB8BB;">clojure.data</span> <span style="color: #D0BF8F;">[</span>json <span style="color: #BFEBBF;">:as</span> json-lib<span style="color: #D0BF8F;">]</span><span style="color: #BFEBBF;">)</span><span style="color: #DCDCCC;">)</span>
+</pre>
+</div>
+<p>
+Now you can use `(json-lib/parse ..)`.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-2-5" class="outline-4">
+<h4 id="sec-1-2-5"><span class="section-number-4">1.2.5</span> import</h4>
+<div class="outline-text-4" id="text-1-2-5">
+<p>
+The `import` is used to import java library.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-clojure">  <span style="color: #DCDCCC;">(</span>import '<span style="color: #7CB8BB;">java.util.Date</span><span style="color: #DCDCCC;">)</span>
+</pre>
+</div>
+<p>
+or:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-clojure">  <span style="color: #DCDCCC;">(</span><span style="color: #F0DFAF; font-weight: bold;">ns</span> <span style="color: #7CB8BB;">my-namespace</span>
+      <span style="color: #BFEBBF;">(</span><span style="color: #BFEBBF;">:import</span> <span style="color: #D0BF8F;">[</span><span style="color: #7CB8BB;">java.util</span> <span style="color: #7CB8BB;">Date</span> <span style="color: #7CB8BB;">Calendar</span><span style="color: #D0BF8F;">]</span><span style="color: #BFEBBF;">)</span><span style="color: #DCDCCC;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-2-6" class="outline-4">
+<h4 id="sec-1-2-6"><span class="section-number-4">1.2.6</span> common usage</h4>
+<div class="outline-text-4" id="text-1-2-6">
+<div class="org-src-container">
+
+<pre class="src src-clojure">  <span style="color: #DCDCCC;">(</span><span style="color: #F0DFAF; font-weight: bold;">ns</span> <span style="color: #7CB8BB;">new-namespace</span>
+      <span style="color: #BFEBBF;">(</span><span style="color: #BFEBBF;">:require</span> <span style="color: #D0BF8F;">[</span><span style="color: #7CB8BB;">clojure.data.json</span> <span style="color: #BFEBBF;">:as</span> json-lib<span style="color: #D0BF8F;">]</span> <span style="color: #BFEBBF;">)</span><span style="color: #DCDCCC;">)</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-3" class="outline-3">
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> java interop</h3>
+<div class="outline-text-3" id="text-1-3">
+</div><div id="outline-container-sec-1-3-1" class="outline-4">
+<h4 id="sec-1-3-1"><span class="section-number-4">1.3.1</span> Member access</h4>
+<div class="outline-text-4" id="text-1-3-1">
+<div class="org-src-container">
+
+<pre class="src src-clojure">  <span style="color: #DCDCCC;">(</span><span style="color: #94BFF3;">.instanceMember</span> instance args*<span style="color: #DCDCCC;">)</span>
+  <span style="color: #DCDCCC;">(</span><span style="color: #94BFF3;">.instanceMember</span> <span style="color: #7CB8BB;">Classname</span> args*<span style="color: #DCDCCC;">)</span>
+  <span style="color: #DCDCCC;">(</span><span style="color: #94BFF3;">.-instanceField</span> instance<span style="color: #DCDCCC;">)</span>
+  <span style="color: #DCDCCC;">(</span><span style="color: #7CB8BB;">Classname</span><span style="color: #DCDCCC; background-color: #3F3F3F;">/</span><span style="color: #94BFF3;">staticMethod</span> args*<span style="color: #DCDCCC;">)</span>
+  <span style="color: #7CB8BB;">Classname</span><span style="color: #DCDCCC; background-color: #3F3F3F;">/</span><span style="color: #94BFF3;">staticField</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-3-2" class="outline-4">
+<h4 id="sec-1-3-2"><span class="section-number-4">1.3.2</span> The Dot special form</h4>
+<div class="outline-text-4" id="text-1-3-2">
+<div class="org-src-container">
+
+<pre class="src src-clojure">  <span style="color: #DCDCCC;">(</span><span style="color: #F0DFAF; font-weight: bold;">.</span> instance-expr member-symbol<span style="color: #DCDCCC;">)</span>
+  <span style="color: #DCDCCC;">(</span><span style="color: #F0DFAF; font-weight: bold;">.</span> Classname-symbol member-symbol<span style="color: #DCDCCC;">)</span>
+  <span style="color: #DCDCCC;">(</span><span style="color: #F0DFAF; font-weight: bold;">.</span> instance-expr -field-symbol<span style="color: #DCDCCC;">)</span>
+  <span style="color: #DCDCCC;">(</span><span style="color: #F0DFAF; font-weight: bold;">.</span> instance-expr <span style="color: #BFEBBF;">(</span>method-symbol args<span style="color: #BFEBBF;">)</span><span style="color: #DCDCCC;">)</span>
+ <span style="color: #DCDCCC;">(</span><span style="color: #F0DFAF; font-weight: bold;">.</span> instance-expr method-symbol args<span style="color: #DCDCCC;">)</span>
+  <span style="color: #DCDCCC;">(</span><span style="color: #F0DFAF; font-weight: bold;">.</span> Classname-symbol <span style="color: #BFEBBF;">(</span>method-symbol args<span style="color: #BFEBBF;">)</span><span style="color: #DCDCCC;">)</span>
+ <span style="color: #DCDCCC;">(</span><span style="color: #F0DFAF; font-weight: bold;">.</span> Classname-symbol method-symbol args<span style="color: #DCDCCC;">)</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: <span class="timestamp-wrapper"><span class="timestamp">&lt;2016-08-22 Mon&gt;</span></span></p>
+<p class="author">Author: 杜猛</p>
+<p class="date">Created: 2017-11-13 Mon 18:54</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 25.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.10)</p>
+<p class="validation"></p>
+</div>
+</body>
+</html>

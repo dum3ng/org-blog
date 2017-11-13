@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>make a simple udp message sender using node</title>
+<!-- 2017-11-13 Mon 18:54 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<meta  name="author" content="杜猛" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<link href="https://cdn.bootcss.com/normalize/5.0.0/normalize.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="https://bootswatch.com/4/flatly/bootstrap.min.css" />
+<script src="https://cdn.rawgit.com/Matt-Esch/virtual-dom/master/dist/virtual-dom.js"></script>
+<link rel="stylesheet" type="text/css" href="../static/mystyle.css" />
+<script src='../static/myscript.js'></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">make a simple udp message sender using node</h1>
+<p>
+Use the <code>readline</code> and <code>dgram</code> to write a simple chat server.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-js"><span style="color: #F0DFAF; font-weight: bold;">const</span> <span style="color: #DFAF8F;">dgram</span> = require<span style="color: #DCDCCC;">(</span><span style="color: #CC9393;">'dgram'</span><span style="color: #DCDCCC;">)</span>
+<span style="color: #F0DFAF; font-weight: bold;">const</span> <span style="color: #DFAF8F;">repl</span> = require<span style="color: #DCDCCC;">(</span><span style="color: #CC9393;">'repl'</span><span style="color: #DCDCCC;">)</span>
+<span style="color: #F0DFAF; font-weight: bold;">const</span> <span style="color: #DFAF8F;">readline</span> = require<span style="color: #DCDCCC;">(</span><span style="color: #CC9393;">'readline'</span><span style="color: #DCDCCC;">)</span>
+
+<span style="color: #F0DFAF; font-weight: bold;">var</span> <span style="color: #DFAF8F;">client</span> = dgram.createSocket<span style="color: #DCDCCC;">(</span><span style="color: #CC9393;">'udp4'</span><span style="color: #DCDCCC;">)</span>
+<span style="color: #F0DFAF; font-weight: bold;">var</span> <span style="color: #DFAF8F;">rl</span> = readline.createInterface<span style="color: #DCDCCC;">(</span><span style="color: #BFEBBF;">{</span>
+  input:process.stdin,
+  output:process.stdout,
+  prompt:<span style="color: #CC9393;">'send&gt;&gt; '</span>
+<span style="color: #BFEBBF;">}</span><span style="color: #DCDCCC;">)</span>
+
+client.on<span style="color: #DCDCCC;">(</span><span style="color: #CC9393;">'message'</span>, <span style="color: #BFEBBF;">(</span>msg<span style="color: #BFEBBF;">)</span> =&gt; <span style="color: #BFEBBF;">{</span>
+  <span style="color: #F0DFAF; font-weight: bold;">var</span> <span style="color: #DFAF8F;">obj</span> = JSON.parse<span style="color: #D0BF8F;">(</span>msg<span style="color: #D0BF8F;">)</span>
+  console.log<span style="color: #D0BF8F;">(</span>=\nFrom $<span style="color: #93E0E3;">{</span>obj.port<span style="color: #93E0E3;">}</span>&gt;&gt; $<span style="color: #93E0E3;">{</span>obj.message<span style="color: #93E0E3;">}</span> =<span style="color: #D0BF8F;">)</span>
+<span style="color: #BFEBBF;">}</span><span style="color: #DCDCCC;">)</span>.on<span style="color: #DCDCCC;">(</span><span style="color: #CC9393;">'close'</span>, <span style="color: #BFEBBF;">()</span> =&gt; <span style="color: #BFEBBF;">{</span>
+  console.log<span style="color: #D0BF8F;">(</span><span style="color: #CC9393;">'INFO: socket closed.'</span><span style="color: #D0BF8F;">)</span>
+<span style="color: #BFEBBF;">}</span><span style="color: #DCDCCC;">)</span>.on<span style="color: #DCDCCC;">(</span><span style="color: #CC9393;">'listening'</span>, <span style="color: #BFEBBF;">()</span> =&gt; <span style="color: #BFEBBF;">{</span>
+  <span style="color: #F0DFAF; font-weight: bold;">var</span> <span style="color: #DFAF8F;">addr</span> = client.address<span style="color: #D0BF8F;">()</span>
+  console.log<span style="color: #D0BF8F;">(</span>=listening on $<span style="color: #93E0E3;">{</span>addr.port<span style="color: #93E0E3;">}</span> at $<span style="color: #93E0E3;">{</span>addr.address<span style="color: #93E0E3;">}</span>=<span style="color: #D0BF8F;">)</span>
+  rl.prompt<span style="color: #D0BF8F;">()</span>
+<span style="color: #BFEBBF;">}</span><span style="color: #DCDCCC;">)</span>
+
+rl.on<span style="color: #DCDCCC;">(</span><span style="color: #CC9393;">'line'</span>, <span style="color: #BFEBBF;">(</span>line<span style="color: #BFEBBF;">)</span> =&gt; <span style="color: #BFEBBF;">{</span>
+  <span style="color: #F0DFAF; font-weight: bold;">var</span> <span style="color: #DFAF8F;">obj</span> = <span style="color: #D0BF8F;">{</span>
+    port: 41234,
+    message:line,
+  <span style="color: #D0BF8F;">}</span>
+  client.send<span style="color: #D0BF8F;">(</span>JSON.stringify<span style="color: #93E0E3;">(</span>obj<span style="color: #93E0E3;">)</span>, 41235, <span style="color: #CC9393;">'0.0.0.0'</span>, <span style="color: #93E0E3;">(</span>err<span style="color: #93E0E3;">)</span> =&gt; <span style="color: #93E0E3;">{</span>
+     <span style="color: #F0DFAF; font-weight: bold;">if</span><span style="color: #9FC59F;">(</span>err<span style="color: #9FC59F;">)</span> <span style="color: #9FC59F;">{</span>
+      console.log<span style="color: #94BFF3;">(</span>err<span style="color: #94BFF3;">)</span>
+      client.close<span style="color: #94BFF3;">()</span>
+    <span style="color: #9FC59F;">}</span><span style="color: #F0DFAF; font-weight: bold;">else</span><span style="color: #9FC59F;">{</span>
+      rl.prompt<span style="color: #94BFF3;">()</span>
+    <span style="color: #9FC59F;">}</span>
+  <span style="color: #93E0E3;">}</span><span style="color: #D0BF8F;">)</span>
+<span style="color: #BFEBBF;">}</span><span style="color: #DCDCCC;">)</span>
+
+client.bind<span style="color: #DCDCCC;">(</span>41234<span style="color: #DCDCCC;">)</span>
+</pre>
+</div>
+
+<p>
+This will listen on a port and send message to another port, you can test this on one computer. 
+If you want to communicate between different computer, you need use broadcast and change code to:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-js"><span style="color: #5F7F5F;">// </span><span style="color: #7F9F7F;">send message to the broadcast address on the same port</span>
+client.send<span style="color: #DCDCCC;">(</span>JSON.stringify<span style="color: #BFEBBF;">(</span>obj<span style="color: #BFEBBF;">)</span>, 41234, <span style="color: #CC9393;">'192.168.1.255'</span>, <span style="color: #BFEBBF;">()</span> =&gt; <span style="color: #BFEBBF;">{</span>
+  ...
+  <span style="color: #BFEBBF;">}</span><span style="color: #DCDCCC;">)</span>
+</pre>
+</div>
+
+<p>
+Send message to ip address <code>192.168.1.255</code> will broadcast message to all the devices with ip address <code>192.168.1.*</code>.
+Setting all the bits of an IP address to one, or 255.255.255.255, forms the limited broadcast address. Sending a UDP datagram to this address delivers the message to any host on the local network segment. Because routers never forward messages sent to this address, only hosts on the network segment receive the broadcast message.
+</p>
+
+<p>
+Broadcasts can be directed to specific portions of a network by setting all bits of the host identifier. For example, to send a broadcast to all hosts on the network identified by IP addresses starting with 192.168.1, use the address 192.168.1.255.
+</p>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: <span class="timestamp-wrapper"><span class="timestamp">&lt;2016-10-27 Thu&gt;</span></span></p>
+<p class="author">Author: 杜猛</p>
+<p class="date">Created: 2017-11-13 Mon 18:54</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 25.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.10)</p>
+<p class="validation"></p>
+</div>
+</body>
+</html>

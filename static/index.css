@@ -1,0 +1,54 @@
+/* css for theindex.org  */
+* {
+    box-sizing: border-box;
+}
+body, html {
+    padding: 0;
+    margin: 0;
+}
+#content {
+  width: 70%;
+  margin: auto;
+  min-width: 600px;
+  padding: 10px 20px;
+  border: solid #ddd 1px;
+  border-width: 0 1px;
+
+}
+h3[id^='sec'] {
+    display: none;
+}
+
+#postamble {
+    background-color: #eee;
+    border-top: solid 1px #ddd;
+    padding: 5px 20px;
+}
+@media (max-height: 720px) and ( min-height: 300px){
+    #postamble {
+        width: 100%;
+        position: fixed;
+        bottom: 0;
+    }}
+#postamble p,
+#preamble p {
+  font-size: 90%;
+  margin: .2em;
+}
+
+div[class^='outline-text'] {
+    display: inline-block;
+    font-size: 1.2em;
+}
+
+div[class^='outline-text'] ul {
+    list-style: none;
+}
+
+div[class^='outline-text'] a {
+    text-decoration: none;
+}
+
+.org-ul a {
+    font-size: 1.2em;
+}
