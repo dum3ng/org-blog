@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>use other react component with reagent</title>
+<!-- 2017-11-29 Wed 21:31 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<meta  name="author" content="杜猛" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<link href="https://cdn.bootcss.com/normalize/5.0.0/normalize.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="https://bootswatch.com/4/flatly/bootstrap.min.css" />
+<script src="../../static/virtual-dom.js"></script>
+<link rel="stylesheet" type="text/css" href="../../static/mystyle.css" />
+<script src='../../static/myscript.js' ></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">use other react component with reagent</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. create a main.js file</a></li>
+<li><a href="#sec-2">2. create webpack config</a></li>
+<li><a href="#sec-3">3. config in project.clj</a></li>
+<li><a href="#sec-4">4. use it!</a></li>
+</ul>
+</div>
+</div>
+<p>
+Clojurescript can support the external js library, but there are so many js run environments and module systems, which make use foreign js library may be a headache in clojurescript.
+</p>
+
+<p>
+Specially if using reagent as the react wrapper, and since reagent use <code>cljsjs/react</code>, <code>cljsjs/react-dom</code> as dependencies, it will meet some confict when other react component library has a peer dependencies with react.
+</p>
+
+<p>
+In the above case, we need to exclude react from reagent:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-clojure"><span style="color: #BFEBBF;">:dependencies</span> <span style="color: #DCDCCC;">[</span><span style="color: #BFEBBF;">[</span>reagent
+                <span style="color: #BFEBBF;">:exclusions</span> <span style="color: #D0BF8F;">[</span><span style="color: #7CB8BB;">cljsjs</span><span style="color: #DCDCCC; background-color: #3F3F3F;">/</span>react
+                             <span style="color: #7CB8BB;">cljsjs</span><span style="color: #DCDCCC; background-color: #3F3F3F;">/</span>react-dom<span style="color: #D0BF8F;">]</span><span style="color: #BFEBBF;">]</span><span style="color: #DCDCCC;">]</span>
+</pre>
+</div>
+<p>
+and then install the node packages.
+</p>
+
+<p>
+Currently there are two ways to use foreign library, through <code>:foreign-libs</code>, or use <code>:npm-deps</code>.
+Use <code>:foreign-libs</code> needs you to add package dependencies manually, so it may suit for small libraries with less outside dependencies, but not for large project.
+To leverage the <code>:foreign-libs</code> option, we can bundle the library into a single <code>bundle.js</code> file, and expose interfaces we want.
+</p>
+
+<p>
+As for <code>:npm-deps</code>, it is a new feature in clojurescript compiler.
+It seems promising, but in real work, I always met some strange things, it works now but broken later which really annoying.
+</p>
+
+<p>
+Inspired by this [article](<a href="http://blob.tomerweller.com/reagent-import-react-components-from-npm">http://blob.tomerweller.com/reagent-import-react-components-from-npm</a>), we can take other react component into reagent by these steps:
+</p>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> create a main.js file</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Assume the file locates at <code>&lt;project&gt;/src/js</code>
+</p>
+<div class="org-src-container">
+
+<pre class="src src-js"><span style="color: #F0DFAF; font-weight: bold;">import</span> moduleA from <span style="color: #CC9393;">'someModule'</span>;
+<span style="color: #F0DFAF; font-weight: bold;">import</span> moduleB from <span style="color: #CC9393;">'some/moduleB'</span>;
+
+window.deps = <span style="color: #DCDCCC;">{</span>
+  <span style="color: #CC9393;">'react'</span> : require<span style="color: #BFEBBF;">(</span><span style="color: #CC9393;">'react'</span><span style="color: #BFEBBF;">)</span>,
+  <span style="color: #CC9393;">'react-dom'</span> : require<span style="color: #BFEBBF;">(</span><span style="color: #CC9393;">'react-dom'</span><span style="color: #BFEBBF;">)</span>,
+  <span style="color: #CC9393;">'module-a'</span>: moduleA,
+  <span style="color: #CC9393;">'module-b'</span>: moduleB
+<span style="color: #DCDCCC;">}</span>;
+
+window.React = window.deps<span style="color: #DCDCCC;">[</span><span style="color: #CC9393;">'react'</span><span style="color: #DCDCCC;">]</span>;
+window.ReactDOM = window.deps<span style="color: #DCDCCC;">[</span><span style="color: #CC9393;">'react-dom'</span><span style="color: #DCDCCC;">]</span>;
+</pre>
+</div>
+<p>
+<code>React</code> and <code>ReactDOM</code> should be exposed to global namespace, since it is [used by reagent]().
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> create webpack config</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+<code>webpack.config.js</code>:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-js"><span style="color: #F0DFAF; font-weight: bold;">const</span> <span style="color: #DFAF8F;">webpack</span> = require<span style="color: #DCDCCC;">(</span><span style="color: #CC9393;">'webpack'</span><span style="color: #DCDCCC;">)</span>;
+<span style="color: #F0DFAF; font-weight: bold;">const</span> <span style="color: #DFAF8F;">path</span> = require<span style="color: #DCDCCC;">(</span><span style="color: #CC9393;">'path'</span><span style="color: #DCDCCC;">)</span>;
+
+<span style="color: #F0DFAF; font-weight: bold;">const</span> <span style="color: #DFAF8F;">BUILD_DIR</span> = path.resolve<span style="color: #DCDCCC;">(</span>__dirname,<span style="color: #CC9393;">'resources'</span>, <span style="color: #CC9393;">'public'</span>, <span style="color: #CC9393;">'js'</span><span style="color: #DCDCCC;">)</span>;
+<span style="color: #F0DFAF; font-weight: bold;">const</span> <span style="color: #DFAF8F;">APP_DIR</span> = path.resolve<span style="color: #DCDCCC;">(</span>__dirname, <span style="color: #CC9393;">'src'</span>, <span style="color: #CC9393;">'js'</span><span style="color: #DCDCCC;">)</span>;
+
+<span style="color: #F0DFAF; font-weight: bold;">const</span> <span style="color: #DFAF8F;">config</span> = <span style="color: #DCDCCC;">{</span>
+  entry: <span style="color: #CC9393;">`${APP_DIR}/main.js`</span>,
+  output: <span style="color: #BFEBBF;">{</span>
+    path: BUILD_DIR,
+    filename: <span style="color: #CC9393;">'bundle.js'</span>
+  <span style="color: #BFEBBF;">}</span>,
+<span style="color: #DCDCCC;">}</span>;
+
+module.exports = config;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> config in project.clj</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+Set the <code>:foreign-libs</code>.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-clojure"><span style="color: #BFEBBF;">:cljsbuild</span> <span style="color: #DCDCCC;">{</span>
+            <span style="color: #BFEBBF;">:builds</span> <span style="color: #BFEBBF;">[</span><span style="color: #D0BF8F;">{</span>
+                      <span style="color: #BFEBBF;">:id</span> <span style="color: #CC9393;">"dev"</span>
+                      <span style="color: #BFEBBF;">:compiler</span> <span style="color: #93E0E3;">{</span>
+                                 <span style="color: #7F9F7F;">;...</span>
+                                 <span style="color: #BFEBBF;">:foreign-libs</span> <span style="color: #9FC59F;">[</span><span style="color: #94BFF3;">{</span><span style="color: #BFEBBF;">:file</span> <span style="color: #CC9393;">"resources/public/js/bundle.js"</span>
+                                                 <span style="color: #BFEBBF;">:provides</span> <span style="color: #E0CF9F;">[</span><span style="color: #CC9393;">"cljsjs.react"</span>
+                                                      <span style="color: #CC9393;">"cljsjs.react.dom"</span>
+                                                      <span style="color: #CC9393;">"webpack.bundle"</span><span style="color: #E0CF9F;">]</span>
+                 <span style="color: #94BFF3;">}</span><span style="color: #9FC59F;">]</span>
+<span style="color: #93E0E3;">}</span><span style="color: #D0BF8F;">}</span><span style="color: #BFEBBF;">]</span><span style="color: #DCDCCC;">}</span>
+</pre>
+</div>
+<p>
+Note the <code>cljsjs.react</code>, <code>cljsjs.react.dom</code> namespaces are provided.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> use it!</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+In the ui file, we can use the vars stored in <code>window</code>.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-clojure"><span style="color: #DCDCCC;">(</span><span style="color: #F0DFAF; font-weight: bold;">ns</span> <span style="color: #7CB8BB;">app.core</span>
+  <span style="color: #BFEBBF;">(</span><span style="color: #BFEBBF;">:require</span> <span style="color: #D0BF8F;">[</span><span style="color: #7CB8BB;">webpack.bundle</span><span style="color: #D0BF8F;">]</span><span style="color: #BFEBBF;">)</span><span style="color: #DCDCCC;">)</span>
+
+<span style="color: #DCDCCC;">(</span><span style="color: #F0DFAF; font-weight: bold;">def</span> <span style="color: #DFAF8F;">ma</span> <span style="color: #BFEBBF;">(</span>aget <span style="color: #7CB8BB;">js</span><span style="color: #DCDCCC; background-color: #3F3F3F;">/</span>window <span style="color: #CC9393;">"module-a"</span><span style="color: #BFEBBF;">)</span><span style="color: #DCDCCC;">)</span>
+<span style="color: #DCDCCC;">(</span><span style="color: #F0DFAF; font-weight: bold;">def</span> <span style="color: #DFAF8F;">mb</span> <span style="color: #BFEBBF;">(</span>aget <span style="color: #7CB8BB;">js</span><span style="color: #DCDCCC; background-color: #3F3F3F;">/</span>window <span style="color: #CC9393;">"module-b"</span><span style="color: #BFEBBF;">)</span><span style="color: #DCDCCC;">)</span>
+
+<span style="color: #5F7F5F;">;; </span><span style="color: #7F9F7F;">asume ma is a react component</span>
+<span style="color: #DCDCCC;">(</span><span style="color: #F0DFAF; font-weight: bold;">defn</span> <span style="color: #93E0E3;">app</span> <span style="color: #BFEBBF;">[]</span>
+  <span style="color: #BFEBBF;">[</span><span style="color: #BFEBBF;">:div</span>
+   <span style="color: #D0BF8F;">[</span><span style="color: #BFEBBF;">:&gt;</span> ma <span style="color: #93E0E3;">{</span><span style="color: #BFEBBF;">:prop</span> <span style="color: #CC9393;">"..."</span><span style="color: #93E0E3;">}</span><span style="color: #D0BF8F;">]</span><span style="color: #BFEBBF;">]</span><span style="color: #DCDCCC;">)</span>
+</pre>
+</div>
+<p>
+Note the special symbol <code>:&gt;</code> can make the native react component used directly.
+</p>
+
+
+<p>
+<b>notes</b>:
+</p>
+<ul class="org-ul">
+<li>reagent(0.8) [still use react15](<a href="https://github.com/reagent-project/reagent/blob/3b7f8d727545a9c6c4ea817b45965d64bbb0350c/CHANGELOG.md#080-alpha2-2017-10-20">https://github.com/reagent-project/reagent/blob/3b7f8d727545a9c6c4ea817b45965d64bbb0350c/CHANGELOG.md#080-alpha2-2017-10-20</a>), so use react16 will broken since React.createElement is deprecated.
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: <span class="timestamp-wrapper"><span class="timestamp">&lt;2017-11-29 Wed&gt;</span></span></p>
+<p class="author">Author: 杜猛</p>
+<p class="date">Created: 2017-11-29 Wed 21:31</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 25.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.10)</p>
+<p class="validation"></p>
+</div>
+</body>
+</html>

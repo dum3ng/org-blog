@@ -1,7 +1,7 @@
 var { h, create} = virtualDom;
 // CATEGORIES
 const CATEGORIES = {
-	'web': ['javascript', 'css'],
+  'web': ['javascript', 'css', 'clojurescript'],
 	'system': ['linux'],
 	'server': ['swift', 'python', 'node', 'clojure']
 };
