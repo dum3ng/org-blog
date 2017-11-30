@@ -3,7 +3,7 @@
 document.addEventListener('readystatechange', (e) => {
   if (e.target.readyState==='interactive'){
     var postamble = document.getElementById('postamble');
-    var discus = document.createElement('div');
+    var disqus = document.createElement('div');
     disqus.id = 'disqus_thread';
 
     postamble.prepend(disqus);
